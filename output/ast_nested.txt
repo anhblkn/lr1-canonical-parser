@@ -1,0 +1,111 @@
+Reduction 1  step 4  rule r3: I → init
+  value: I1 = Init(init)
+  reused nodes: none
+  new node: I1
+  available subtrees:
+    I1 Init(init)
+
+Reduction 2  step 8  rule r4: C → id
+  value: C1 = Identifier(id)
+  reused nodes: none
+  new node: C1
+  available subtrees:
+    I1 Init(init)
+    C1 Identifier(id)
+
+Reduction 3  step 12  rule r5: U → step
+  value: U1 = Update(step)
+  reused nodes: none
+  new node: U1
+  available subtrees:
+    I1 Init(init)
+    C1 Identifier(id)
+    U1 Update(step)
+
+Reduction 4  step 18  rule r3: I → init
+  value: I2 = Init(init)
+  reused nodes: none
+  new node: I2
+  available subtrees:
+    I1 Init(init)
+    C1 Identifier(id)
+    U1 Update(step)
+    I2 Init(init)
+
+Reduction 5  step 22  rule r4: C → id
+  value: C2 = Identifier(id)
+  reused nodes: none
+  new node: C2
+  available subtrees:
+    I1 Init(init)
+    C1 Identifier(id)
+    U1 Update(step)
+    I2 Init(init)
+    C2 Identifier(id)
+
+Reduction 6  step 26  rule r5: U → step
+  value: U2 = Update(step)
+  reused nodes: none
+  new node: U2
+  available subtrees:
+    I1 Init(init)
+    C1 Identifier(id)
+    U1 Update(step)
+    I2 Init(init)
+    C2 Identifier(id)
+    U2 Update(step)
+
+Reduction 7  step 30  rule r2: S → stmt
+  value: B1 = BasicStmt(stmt)
+  reused nodes: none
+  new node: B1
+  available subtrees:
+    I1 Init(init)
+    C1 Identifier(id)
+    U1 Update(step)
+    I2 Init(init)
+    C2 Identifier(id)
+    U2 Update(step)
+    B1 BasicStmt(stmt)
+
+Reduction 8  step 32  rule r1: S → for ( I ; C ; U ) S
+  value: F1 = For(I2, C2, U2, B1)
+  reused nodes: I2, C2, U2, B1
+  new node: F1
+  available subtrees:
+    I1 Init(init)
+    C1 Identifier(id)
+    U1 Update(step)
+    F1 For
+    ├── initialization: I2 Init(init)
+    ├── condition: C2 Identifier(id)
+    ├── update: U2 Update(step)
+    └── body: B1 BasicStmt(stmt)
+
+Reduction 9  step 34  rule r1: S → for ( I ; C ; U ) S
+  value: F2 = For(I1, C1, U1, F1)
+  reused nodes: I1, C1, U1, F1
+  new node: F2
+  available subtrees:
+    F2 For
+    ├── initialization: I1 Init(init)
+    ├── condition: C1 Identifier(id)
+    ├── update: U1 Update(step)
+    └── body: F1 For
+        ├── initialization: I2 Init(init)
+        ├── condition: C2 Identifier(id)
+        ├── update: U2 Update(step)
+        └── body: B1 BasicStmt(stmt)
+
+Root: F2
+Reductions: 9   AST nodes: 9
+
+F2 For
+├── initialization: I1 Init(init)
+├── condition: C1 Identifier(id)
+├── update: U1 Update(step)
+└── body: F1 For
+    ├── initialization: I2 Init(init)
+    ├── condition: C2 Identifier(id)
+    ├── update: U2 Update(step)
+    └── body: B1 BasicStmt(stmt)

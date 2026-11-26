@@ -1,0 +1,53 @@
+Reduction 1  step 4  rule r3: I → init
+  value: I1 = Init(init)
+  reused nodes: none
+  new node: I1
+  available subtrees:
+    I1 Init(init)
+
+Reduction 2  step 8  rule r4: C → id
+  value: C1 = Identifier(id)
+  reused nodes: none
+  new node: C1
+  available subtrees:
+    I1 Init(init)
+    C1 Identifier(id)
+
+Reduction 3  step 12  rule r5: U → step
+  value: U1 = Update(step)
+  reused nodes: none
+  new node: U1
+  available subtrees:
+    I1 Init(init)
+    C1 Identifier(id)
+    U1 Update(step)
+
+Reduction 4  step 16  rule r2: S → stmt
+  value: B1 = BasicStmt(stmt)
+  reused nodes: none
+  new node: B1
+  available subtrees:
+    I1 Init(init)
+    C1 Identifier(id)
+    U1 Update(step)
+    B1 BasicStmt(stmt)
+
+Reduction 5  step 18  rule r1: S → for ( I ; C ; U ) S
+  value: F1 = For(I1, C1, U1, B1)
+  reused nodes: I1, C1, U1, B1
+  new node: F1
+  available subtrees:
+    F1 For
+    ├── initialization: I1 Init(init)
+    ├── condition: C1 Identifier(id)
+    ├── update: U1 Update(step)
+    └── body: B1 BasicStmt(stmt)
+
+Root: F1
+Reductions: 5   AST nodes: 5
+
+F1 For
+├── initialization: I1 Init(init)
+├── condition: C1 Identifier(id)
+├── update: U1 Update(step)
+└── body: B1 BasicStmt(stmt)

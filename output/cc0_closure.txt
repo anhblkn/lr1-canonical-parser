@@ -1,0 +1,10 @@
+Seed: [Goal → • S, eof]
+
+Closure additions (triggering item -> added item, lookahead reason):
+  [Goal → • S, eof] -> [S → • for ( I ; C ; U ) S, eof]   beta = ε, a = eof, FIRST(beta a) = {eof}
+  [Goal → • S, eof] -> [S → • stmt, eof]   beta = ε, a = eof, FIRST(beta a) = {eof}
+
+Complete CC0:
+  [Goal → • S, eof]
+  [S → • for ( I ; C ; U ) S, eof]
+  [S → • stmt, eof]

@@ -1,0 +1,52 @@
+CC0
+    [Goal → • S, eof]
+    [S → • for ( I ; C ; U ) S, eof]
+    [S → • stmt, eof]
+
+CC1 = goto(CC0, S)
+    [Goal → S •, eof]
+
+CC2 = goto(CC0, for)
+    [S → for • ( I ; C ; U ) S, eof]
+
+CC3 = goto(CC0, stmt)
+    [S → stmt •, eof]
+
+CC4 = goto(CC2, ()
+    [S → for ( • I ; C ; U ) S, eof]
+    [I → • init, ;]
+
+CC5 = goto(CC4, I)
+    [S → for ( I • ; C ; U ) S, eof]
+
+CC6 = goto(CC4, init)
+    [I → init •, ;]
+
+CC7 = goto(CC5, ;)
+    [S → for ( I ; • C ; U ) S, eof]
+    [C → • id, ;]
+
+CC8 = goto(CC7, C)
+    [S → for ( I ; C • ; U ) S, eof]
+
+CC9 = goto(CC7, id)
+    [C → id •, ;]
+
+CC10 = goto(CC8, ;)
+    [S → for ( I ; C ; • U ) S, eof]
+    [U → • step, )]
+
+CC11 = goto(CC10, U)
+    [S → for ( I ; C ; U • ) S, eof]
+
+CC12 = goto(CC10, step)
+    [U → step •, )]
+
+CC13 = goto(CC11, ))
+    [S → for ( I ; C ; U ) • S, eof]
+    [S → • for ( I ; C ; U ) S, eof]
+    [S → • stmt, eof]
+
+CC14 = goto(CC13, S)
+    [S → for ( I ; C ; U ) S •, eof]
+
